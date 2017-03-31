@@ -23,32 +23,35 @@
 #define SEMAPHORE_BtoA	2
 #define NUMBER_OF_SEMAPHORES 3
 
+// bounds for random amount of baboons:
 #define MIN_NUMBER_OF_BABOONS 30
 #define MAX_NUMBER_OF_BABOONS 50
+
+// baboon types:
 #define BABOONAtoB	1
 #define BABOONBtoA	2
 
-// The amount of loop iterations to stall between making baboon processes
-#define BABOON_CREATE_STALL_TIME	7000
-// The amount of loop iterations to stall when crossing the rope
+// amount of iterations to do nothing:
+#define BABOON_CREATE_STALL_TIME	10000
 #define CROSS_ROPE_STALL_TIME	100000
 
+// functions:
 void baboon_fork(int atob_or_btoa);
-
 void AtoB();
 void BtoA();
 
-// Semaphore functions
+// Semaphore functions:
 void semaphore_wait(int semid, int semnumber);
 void semaphore_signal(int semid, int semnumber);
 
-// A staller function that runs an empty for loop iterations times
+// staller function:
 void stall(int iterations);
 
 int get_semid(key_t semkey);
 int get_shmid(key_t shmkey);
 
-struct shared_variable_struct {
+struct shared_variable_struct
+{
 	int CrossingCount;
 	int CrossedCount;
 	int AtoBWaitCount;
@@ -56,7 +59,8 @@ struct shared_variable_struct {
 	enum {None, AtoB, BtoA} CrossingDirection;
 };
 
-union semun {
+union semun
+{
 	/* value for SETVAL */
 	int val;
 	/* buffer for IPC_STAT, IPC_SET */
